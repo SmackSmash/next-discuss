@@ -1,12 +1,8 @@
-'use client';
+import { prisma } from '@/db';
 
-import { Button } from '@heroui/react';
+export default async function Home() {
+  const users = await prisma.user.findMany();
+  console.log(users);
 
-export default function Home() {
-  return (
-    <div>
-      Home Page
-      <Button>Click Me</Button>
-    </div>
-  );
+  return <div>Home Page</div>;
 }
