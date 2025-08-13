@@ -1,10 +1,13 @@
+'use client';
+
+import { Button } from '@heroui/react';
 import { signIn } from '@/actions';
 
-export default async function Home() {
+export default function Home() {
   return (
     <div>
       <form action={signIn}>
-        <button>Sign In</button>
+        <Button type='submit'>Sign In</Button>
       </form>
     </div>
   );
