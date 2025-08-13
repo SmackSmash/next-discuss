@@ -1,6 +1,4 @@
-'use client';
-
-import { Button } from '@heroui/react';
+import { Button } from '@heroui/button';
 import { signIn, signOut } from '@/actions';
 
 export default function Home() {
