@@ -1,11 +1,11 @@
 'use server';
 
-import { signIn, signOut } from '@/auth';
+import * as auth from '@/auth';
 
-export async function appSignIn() {
-  return signIn('google');
+export async function signIn() {
+  return auth.signIn('google');
 }
 
-export async function appSignOut() {
-  return signOut();
+export async function signOut() {
+  return auth.signOut();
 }
