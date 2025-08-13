@@ -1,15 +1,26 @@
 import { Button } from '@heroui/button';
 import { signIn, signOut } from '@/actions';
+import { auth } from '@/auth';
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
+  console.log(session);
+
   return (
-    <div>
-      <form action={signIn}>
-        <Button type='submit'>Sign In</Button>
-      </form>
-      <form action={signOut}>
-        <Button type='submit'>Sign Out</Button>
-      </form>
+    <div className='flex items-center gap-2 p-2'>
+      {session ? (
+        <>
+          <form action={signOut}>
+            <Button type='submit'>Sign Out</Button>
+          </form>
+          <div>{session.user!.email}</div>
+        </>
+      ) : (
+        <form action={signIn}>
+          <Button type='submit'>Sign In</Button>
+        </form>
+      )}
     </div>
   );
 }
