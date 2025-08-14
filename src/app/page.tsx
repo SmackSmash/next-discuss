@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Button } from '@heroui/button';
 import { signIn, signOut } from '@/actions';
 import { auth } from '@/auth';
@@ -13,7 +14,13 @@ export default async function Home() {
           <form action={signOut}>
             <Button type='submit'>Sign Out</Button>
           </form>
-          <div>{session.user?.email}</div>
+          <Image
+            src={session.user?.image!}
+            alt={session.user?.name!}
+            width='40'
+            height='40'
+            className='rounded-full'
+          />
         </>
       ) : (
         <form action={signIn}>
