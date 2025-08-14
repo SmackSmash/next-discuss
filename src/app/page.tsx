@@ -27,6 +27,7 @@ export default async function Home() {
           <Button type='submit'>Sign In</Button>
         </form>
       )}
+      {/* BUG! Profie component does not update on signOut */}
       <Profile />
     </div>
   );
