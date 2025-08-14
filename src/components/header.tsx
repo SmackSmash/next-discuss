@@ -31,7 +31,7 @@ export default async function Header() {
           </>
         ) : (
           <form action={signIn}>
-            <Button type='submit'>Sign In</Button>
+            <Button type='submit'>Sign In With Google</Button>
           </form>
         )}
       </NavbarContent>
