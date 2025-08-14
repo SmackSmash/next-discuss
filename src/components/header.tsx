@@ -1,22 +1,13 @@
-'use client';
-
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Input,
-  Button,
-  Avatar
-} from '@heroui/react';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
+import { Input } from '@heroui/input';
+import { Button } from '@heroui/button';
+import { Avatar } from '@heroui/avatar';
+import { auth } from '@/auth';
 import { signIn, signOut } from '@/actions';
 
-export default function Header() {
-  const session = useSession();
-
-  console.log(session);
+export default async function Header() {
+  const session = await auth();
 
   return (
     <Navbar className='mb-6 shadow'>
@@ -31,12 +22,12 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify='end'>
-        {session.data ? (
+        {session ? (
           <>
             <form action={signOut}>
               <Button type='submit'>Sign Out</Button>
             </form>
-            <Avatar src={session.data?.user?.image!} />
+            <Avatar src={session.user?.image!} />
           </>
         ) : (
           <form action={signIn}>
