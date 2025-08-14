@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Input } from '@heroui/input';
 import { Button } from '@heroui/button';
 import { Avatar } from '@heroui/avatar';
+import { Popover, PopoverTrigger, PopoverContent } from '@heroui/popover';
 import { auth } from '@/auth';
 import { signIn, signOut } from '@/actions';
 
@@ -24,10 +25,16 @@ export default async function Header() {
       <NavbarContent justify='end'>
         {session ? (
           <>
-            <form action={signOut}>
-              <Button type='submit'>Sign Out</Button>
-            </form>
-            <Avatar src={session.user?.image!} />
+            <Popover placement='bottom'>
+              <PopoverTrigger>
+                <Avatar src={session.user?.image!} />
+              </PopoverTrigger>
+              <PopoverContent>
+                <form action={signOut}>
+                  <Button type='submit'>Sign Out</Button>
+                </form>
+              </PopoverContent>
+            </Popover>
           </>
         ) : (
           <form action={signIn}>
