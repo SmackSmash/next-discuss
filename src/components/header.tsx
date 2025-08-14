@@ -1,15 +1,9 @@
 import Link from 'next/link';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Input } from '@heroui/input';
-import { Button } from '@heroui/button';
-import { Avatar } from '@heroui/avatar';
-import { Popover, PopoverTrigger, PopoverContent } from '@heroui/popover';
-import { auth } from '@/auth';
-import { signIn, signOut } from '@/actions';
+import HeaderAuth from './header-auth';
 
-export default async function Header() {
-  const session = await auth();
-
+export default function Header() {
   return (
     <Navbar className='mb-6 shadow'>
       <NavbarBrand>
@@ -23,24 +17,7 @@ export default async function Header() {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify='end'>
-        {session ? (
-          <>
-            <Popover placement='bottom'>
-              <PopoverTrigger>
-                <Avatar src={session.user?.image || ''} />
-              </PopoverTrigger>
-              <PopoverContent>
-                <form action={signOut}>
-                  <Button type='submit'>Sign Out</Button>
-                </form>
-              </PopoverContent>
-            </Popover>
-          </>
-        ) : (
-          <form action={signIn}>
-            <Button type='submit'>Sign In With Google</Button>
-          </form>
-        )}
+        <HeaderAuth />
       </NavbarContent>
     </Navbar>
   );
