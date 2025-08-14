@@ -27,7 +27,7 @@ export default async function Header() {
           <>
             <Popover placement='bottom'>
               <PopoverTrigger>
-                <Avatar src={session.user?.image!} />
+                <Avatar src={session.user?.image || ''} />
               </PopoverTrigger>
               <PopoverContent>
                 <form action={signOut}>
