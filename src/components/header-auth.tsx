@@ -9,6 +9,8 @@ import { useSession } from 'next-auth/react';
 export default function HeaderAuth() {
   const session = useSession();
 
+  if (session.status === 'loading') return 'Loading';
+
   return session.data ? (
     <Popover placement='bottom'>
       <PopoverTrigger>
