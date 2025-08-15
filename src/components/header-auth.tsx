@@ -9,18 +9,21 @@ export default function HeaderAuth() {
 
   if (session.status === 'loading') return 'Loading...';
 
-  return session.data?.user ? (
-    <Popover placement='bottom'>
-      <PopoverTrigger>
-        <Avatar src={session.data.user.image || ''} />
-      </PopoverTrigger>
-      <PopoverContent>
-        <form action={signOut}>
-          <Button type='submit'>Sign Out</Button>
-        </form>
-      </PopoverContent>
-    </Popover>
-  ) : (
+  if (session.data?.user)
+    return (
+      <Popover placement='bottom'>
+        <PopoverTrigger>
+          <Avatar src={session.data.user.image || ''} />
+        </PopoverTrigger>
+        <PopoverContent>
+          <form action={signOut}>
+            <Button type='submit'>Sign Out</Button>
+          </form>
+        </PopoverContent>
+      </Popover>
+    );
+
+  return (
     <form action={signIn}>
       <Button type='submit'>Sign In With Google</Button>
     </form>
