@@ -27,8 +27,9 @@ export async function createTopic(
   });
 
   if (!result.success) {
-    console.log(z.flattenError(result.error));
-    return z.flattenError(result.error).fieldErrors;
+    return {
+      errors: z.flattenError(result.error).fieldErrors
+    };
   }
 
   return {

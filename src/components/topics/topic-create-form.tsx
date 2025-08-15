@@ -6,15 +6,17 @@ import { type FormEvent, startTransition, useActionState } from 'react';
 
 export default function TopicCreateForm() {
   const [state, formAction, isPending] = useActionState(createTopic, {
-    name: [],
-    description: []
+    errors: {
+      name: [],
+      description: []
+    }
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(() => {
-      action(formData);
+      formAction(formData);
     });
   };
 
