@@ -2,14 +2,19 @@
 
 import { Input, Textarea, Button, Popover, PopoverTrigger, PopoverContent } from '@heroui/react';
 import { createTopic } from '@/actions';
-import { type FormEvent, startTransition } from 'react';
+import { type FormEvent, startTransition, useActionState } from 'react';
 
 export default function TopicCreateForm() {
+  const [state, formAction, isPending] = useActionState(createTopic, {
+    name: [],
+    description: []
+  });
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(() => {
-      createTopic(formData);
+      action(formData);
     });
   };
 
