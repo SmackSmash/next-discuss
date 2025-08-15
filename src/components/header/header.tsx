@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/navbar';
 import { Input } from '@heroui/input';
-import HeaderAuth from '@/components/header-auth';
+import HeaderAuth from '@/components/header/header-auth';
 
 export default function Header() {
   return (
