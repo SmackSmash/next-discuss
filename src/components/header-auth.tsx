@@ -14,7 +14,7 @@ export default function HeaderAuth() {
   return session.data ? (
     <Popover placement='bottom'>
       <PopoverTrigger>
-        <Avatar src={session.data?.user?.image || ''} />
+        <Avatar src={session.data.user?.image || ''} />
       </PopoverTrigger>
       <PopoverContent>
         <form action={signOut}>
