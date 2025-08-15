@@ -1,20 +1,18 @@
 'use client';
 
-import { Button } from '@heroui/button';
-import { Avatar } from '@heroui/avatar';
-import { Popover, PopoverTrigger, PopoverContent } from '@heroui/popover';
-import { signIn, signOut } from '@/actions';
+import { Button, Avatar, Popover, PopoverTrigger, PopoverContent } from '@heroui/react';
 import { useSession } from 'next-auth/react';
+import { signIn, signOut } from '@/actions';
 
 export default function HeaderAuth() {
   const session = useSession();
 
-  if (session.status === 'loading') return 'Loading';
+  if (session.status === 'loading') return 'Loading...';
 
-  return session.data ? (
+  return session.data?.user ? (
     <Popover placement='bottom'>
       <PopoverTrigger>
-        <Avatar src={session.data.user?.image || ''} />
+        <Avatar src={session.data.user.image || ''} />
       </PopoverTrigger>
       <PopoverContent>
         <form action={signOut}>
