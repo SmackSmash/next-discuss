@@ -42,6 +42,9 @@ export default function TopicCreateForm() {
             isInvalid={!!state.errors.description}
             errorMessage={state.errors.description}
           />
+          {state.errors._form && (
+            <div className='text-red-500'>{state.errors._form.join(', ')}</div>
+          )}
           <Button type='submit' color='primary'>
             {isPending ? 'Submitting Form' : 'Submit'}
           </Button>
