@@ -5,6 +5,7 @@ import { createTopic } from '@/actions';
 import { type FormEvent, startTransition, useActionState } from 'react';
 
 export default function TopicCreateForm() {
+  // State default defined here must be of same type returned by server action
   const [state, formAction, isPending] = useActionState(createTopic, {
     errors: {}
   });
