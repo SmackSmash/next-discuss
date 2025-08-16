@@ -42,7 +42,7 @@ export default function TopicCreateForm() {
             errorMessage={state.errors.description}
           />
           <Button type='submit' color='primary'>
-            Submit
+            {isPending ? 'Submitting Form' : 'Submit'}
           </Button>
         </form>
       </PopoverContent>
