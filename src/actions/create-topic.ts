@@ -4,6 +4,8 @@ import { z } from 'zod';
 import { auth } from '@/auth';
 import { type Topic } from '@prisma/client';
 import { prisma } from '@/db';
+import paths from '@/paths';
+import { redirect } from 'next/navigation';
 
 const createTopicSchema = z.object({
   name: z
@@ -61,7 +63,15 @@ export async function createTopic(
         }
       };
     }
+
+    return {
+      errors: {
+        _form: ['Something went wrong']
+      }
+    };
   }
+
+  redirect(paths.topicShow(topic.slug));
 
   return {
     errors: {}
