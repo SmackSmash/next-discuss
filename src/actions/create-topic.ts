@@ -2,6 +2,8 @@
 
 import { z } from 'zod';
 import { auth } from '@/auth';
+import { type Topic } from '@prisma/client';
+import { prisma } from '@/db';
 
 const createTopicSchema = z.object({
   name: z
@@ -26,19 +28,39 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
+  // Check user is authorized to perform this action
+  const session = await auth();
+  if (!session) return { errors: { _form: ['Not signed in'] } };
+
+  // Validate form
   const result = createTopicSchema.safeParse({
     name: formData.get('name'),
     description: formData.get('description')
   });
 
-  const session = await auth();
-
-  if (!session) return { errors: { _form: ['Not signed in'] } };
-
   if (!result.success) {
     return {
       errors: z.flattenError(result.error).fieldErrors
     };
+  }
+
+  // Insert data to db
+  let topic: Topic;
+  try {
+    topic = await prisma.topic.create({
+      data: {
+        slug: result.data.name,
+        description: result.data.description
+      }
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        errors: {
+          _form: [error.message]
+        }
+      };
+    }
   }
 
   return {
