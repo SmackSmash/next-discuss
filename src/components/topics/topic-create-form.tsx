@@ -1,8 +1,8 @@
 'use client';
 
+import { type FormEvent, startTransition, useActionState } from 'react';
 import { Input, Textarea, Button, Popover, PopoverTrigger, PopoverContent } from '@heroui/react';
 import { createTopic } from '@/actions';
-import { type FormEvent, startTransition, useActionState } from 'react';
 
 export default function TopicCreateForm() {
   // State default defined here must be of same type returned by server action
@@ -25,7 +25,7 @@ export default function TopicCreateForm() {
       </PopoverTrigger>
       <PopoverContent className='bg-stone-900'>
         <form onSubmit={handleSubmit} className='flex w-80 flex-col gap-4 p-4'>
-          <h3>Create a Topic</h3>
+          <h3 text-lg>Create a Topic</h3>
           <Input
             name='name'
             label='Name'
