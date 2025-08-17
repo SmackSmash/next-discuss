@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 import { auth } from '@/auth';
-import { type Topic } from '@prisma/client';
 import { prisma } from '@/db';
 import paths from '@/paths';
 import { redirect } from 'next/navigation';
@@ -30,31 +29,33 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
-  // Check user is authorized to perform this action
-  const session = await auth();
-  if (!session) return { errors: { _form: ['Not signed in'] } };
-
-  // Validate form
-  const result = createTopicSchema.safeParse({
-    name: formData.get('name'),
-    description: formData.get('description')
-  });
-
-  if (!result.success) {
-    return {
-      errors: z.flattenError(result.error).fieldErrors
-    };
-  }
-
-  // Insert data to db
-  let topic: Topic;
   try {
-    topic = await prisma.topic.create({
+    // Check user is authorized to perform this action
+    const session = await auth();
+    if (!session) return { errors: { _form: ['Not signed in'] } };
+
+    // Validate form
+    const result = createTopicSchema.safeParse({
+      name: formData.get('name'),
+      description: formData.get('description')
+    });
+
+    if (!result.success) {
+      return {
+        errors: z.flattenError(result.error).fieldErrors
+      };
+    }
+
+    // Insert data to db
+    const topic = await prisma.topic.create({
       data: {
         slug: result.data.name,
         description: result.data.description
       }
     });
+
+    redirect(paths.topicShow(topic.slug));
+    //TODO: revalidate homepage
   } catch (error) {
     if (error instanceof Error) {
       return {
@@ -70,7 +71,4 @@ export async function createTopic(
       }
     };
   }
-
-  redirect(paths.topicShow(topic.slug));
-  //TODO: revalidate homepage
 }

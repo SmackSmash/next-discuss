@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 import { auth } from '@/auth';
-import { type Post } from '@prisma/client';
 import { prisma } from '@/db';
 import paths from '@/paths';
 import { redirect } from 'next/navigation';
@@ -27,7 +26,7 @@ export async function createPost(
 ): Promise<CreatePostFormState> {
   try {
     const session = await auth();
-    if (!session) return { errors: { _form: ['Not signed in'] } };
+    if (!session?.user?.id) return { errors: { _form: ['Not signed in'] } };
 
     const result = createPostSchema.safeParse({
       title: formData.get('title'),
@@ -40,7 +39,24 @@ export async function createPost(
       };
     }
 
-    const topicId = await prisma.topic.findUnique({ where: { slug }, select: { id: true } });
+    const topic = await prisma.topic.findUnique({ where: { slug }, select: { id: true } });
+
+    if (!topic) {
+      return {
+        errors: {
+          _form: ['Invalid topic']
+        }
+      };
+    }
+
+    const post = await prisma.post.create({
+      data: {
+        title: result.data.title,
+        content: result.data.content,
+        userId: session.user.id,
+        topicId: topic.id
+      }
+    });
 
     return { errors: {} };
   } catch (error) {
@@ -58,30 +74,6 @@ export async function createPost(
       }
     };
   }
-
-  // let post: Post;
-  // try {
-  //   post = await prisma.post.create({
-  //     data: {
-  //       title: result.data.title,
-  //       content: result.data.content
-  //     }
-  //   });
-  // } catch (error) {
-  //   if (error instanceof Error) {
-  //     return {
-  //       errors: {
-  //         _form: [error.message]
-  //       }
-  //     };
-  //   }
-
-  //   return {
-  //     errors: {
-  //       _form: ['Something went wrong']
-  //     }
-  //   };
-  // }
 
   //TODO: revalidate topicPage
 }
