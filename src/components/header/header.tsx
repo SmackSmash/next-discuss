@@ -5,7 +5,7 @@ import HeaderAuth from '@/components/header/header-auth';
 
 export default function Header() {
   return (
-    <Navbar className='mb-6 shadow'>
+    <Navbar className='mb-6 bg-stone-900 shadow'>
       <NavbarBrand>
         <Link href='/' className='font-bold'>
           Discuss

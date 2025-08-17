@@ -12,10 +12,10 @@ export default async function TopicList() {
   });
 
   return (
-    <div>
+    <div className='flex flex-wrap gap-2'>
       {topics.map(({ id, slug }) => (
         <Link href={paths.topicShow(slug)} key={id}>
-          <Chip>{slug}</Chip>
+          <Chip color='warning'>{slug}</Chip>
         </Link>
       ))}
     </div>
