@@ -20,7 +20,10 @@ type CreatePostFormState = {
   };
 };
 
-export async function createPost(formState: CreatePostFormState, formData: FormData) {
+export async function createPost(
+  formState: CreatePostFormState,
+  formData: FormData
+): Promise<CreatePostFormState> {
   const session = await auth();
   if (!session) return { errors: { _form: ['Not signed in'] } };
 
