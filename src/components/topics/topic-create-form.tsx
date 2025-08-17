@@ -45,8 +45,8 @@ export default function TopicCreateForm() {
           {state.errors._form && (
             <div className='text-red-500'>{state.errors._form.join(', ')}</div>
           )}
-          <Button type='submit' color='primary'>
-            {isPending ? 'Submitting Form' : 'Submit'}
+          <Button type='submit' color='primary' isLoading={isPending}>
+            Submit
           </Button>
         </form>
       </PopoverContent>

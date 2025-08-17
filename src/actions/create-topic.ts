@@ -72,9 +72,5 @@ export async function createTopic(
   }
 
   redirect(paths.topicShow(topic.slug));
-
-  return {
-    errors: {}
-  };
   //TODO: revalidate homepage
 }
