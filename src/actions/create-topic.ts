@@ -30,6 +30,7 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
+  let topicSlug: string;
   try {
     // Check user is authorized to perform this action
     const session = await auth();
@@ -55,8 +56,7 @@ export async function createTopic(
       }
     });
 
-    revalidatePath(paths.home());
-    redirect(paths.topicShow(topic.slug));
+    topicSlug = topic.slug;
   } catch (error) {
     if (error instanceof Error) {
       return {
@@ -72,4 +72,7 @@ export async function createTopic(
       }
     };
   }
+
+  revalidatePath(paths.home());
+  redirect(paths.topicShow(topicSlug));
 }

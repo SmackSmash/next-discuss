@@ -25,6 +25,7 @@ export async function createPost(
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
+  let postId: string;
   try {
     const session = await auth();
     if (!session?.user?.id) return { errors: { _form: ['Not signed in'] } };
@@ -59,8 +60,7 @@ export async function createPost(
       }
     });
 
-    revalidatePath(paths.topicShow(slug));
-    redirect(paths.postShow(slug, post.id));
+    postId = post.id;
   } catch (error) {
     if (error instanceof Error) {
       return {
@@ -76,4 +76,7 @@ export async function createPost(
       }
     };
   }
+
+  revalidatePath(paths.topicShow(slug));
+  redirect(paths.postShow(slug, postId));
 }
