@@ -25,16 +25,23 @@ export async function createPost(
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
-  const session = await auth();
-  if (!session) return { errors: { _form: ['Not signed in'] } };
-
-  const result = createPostSchema.safeParse({
-    title: formData.get('title'),
-    content: formData.get('content')
-  });
-
   try {
+    const session = await auth();
+    if (!session) return { errors: { _form: ['Not signed in'] } };
+
+    const result = createPostSchema.safeParse({
+      title: formData.get('title'),
+      content: formData.get('content')
+    });
+
+    if (!result.success) {
+      return {
+        errors: z.flattenError(result.error).fieldErrors
+      };
+    }
+
     const topicId = await prisma.topic.findUnique({ where: { slug }, select: { id: true } });
+
     return { errors: {} };
   } catch (error) {
     if (error instanceof Error) {
@@ -44,17 +51,13 @@ export async function createPost(
         }
       };
     }
-  }
 
-  if (!result.success) {
     return {
-      errors: z.flattenError(result.error).fieldErrors
+      errors: {
+        _form: ['Something went wrong']
+      }
     };
   }
-
-  return {
-    errors: {}
-  };
 
   // let post: Post;
   // try {
