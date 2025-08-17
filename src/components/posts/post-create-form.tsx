@@ -41,6 +41,9 @@ export default function PostCreateForm() {
             isInvalid={!!state.errors.content}
             errorMessage={state.errors.content}
           />
+          {state.errors._form && (
+            <div className='text-red-500'>{state.errors._form.join(', ')}</div>
+          )}
           <Button type='submit' color='primary' isLoading={isPending}>
             Submit
           </Button>
