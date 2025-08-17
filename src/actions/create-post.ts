@@ -21,11 +21,14 @@ type CreatePostFormState = {
 };
 
 export async function createPost(
+  slug: string,
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
   const session = await auth();
   if (!session) return { errors: { _form: ['Not signed in'] } };
+
+  console.log(session, slug);
 
   const result = createPostSchema.safeParse({
     title: formData.get('title'),

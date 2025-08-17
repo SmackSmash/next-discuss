@@ -4,8 +4,12 @@ import { FormEvent, useActionState, startTransition } from 'react';
 import { Input, Textarea, Button, Popover, PopoverTrigger, PopoverContent } from '@heroui/react';
 import { createPost } from '@/actions';
 
-export default function PostCreateForm() {
-  const [state, formAction, isPending] = useActionState(createPost, {
+type PostCreateFormProps = {
+  slug: string;
+};
+
+export default function PostCreateForm({ slug }: PostCreateFormProps) {
+  const [state, formAction, isPending] = useActionState(createPost.bind(null, slug), {
     errors: {}
   });
 

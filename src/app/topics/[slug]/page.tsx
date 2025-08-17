@@ -14,7 +14,7 @@ export default async function TopicPage({ params }: TopicPageProps) {
         <h1 className='mb-2 text-2xl font-bold'>{_.capitalize(slug)}</h1>
       </div>
       <div>
-        <PostCreateForm />
+        <PostCreateForm slug={slug} />
       </div>
     </div>
   );
