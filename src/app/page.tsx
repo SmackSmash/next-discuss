@@ -1,4 +1,5 @@
 import TopicCreateForm from '@/components/topics/topic-create-form';
+import TopicList from '@/components/topics/topic-list';
 
 export default function Home() {
   return (
@@ -6,7 +7,10 @@ export default function Home() {
       <div className='col-span-3'>
         <h1 className='-m-2 text-xl'>Top Posts</h1>
       </div>
-      <TopicCreateForm />
+      <div>
+        <TopicCreateForm />
+        <TopicList />
+      </div>
     </div>
   );
 }
