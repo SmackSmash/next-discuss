@@ -1,10 +1,11 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { auth } from '@/auth';
 import { prisma } from '@/db';
 import paths from '@/paths';
-import { redirect } from 'next/navigation';
 
 const createPostSchema = z.object({
   title: z.string().min(3),
@@ -58,7 +59,8 @@ export async function createPost(
       }
     });
 
-    return { errors: {} };
+    revalidatePath(paths.topicShow(slug));
+    redirect(paths.postShow(slug, post.id));
   } catch (error) {
     if (error instanceof Error) {
       return {
@@ -74,6 +76,4 @@ export async function createPost(
       }
     };
   }
-
-  //TODO: revalidate topicPage
 }

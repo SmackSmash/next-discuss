@@ -1,10 +1,11 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { auth } from '@/auth';
 import { prisma } from '@/db';
 import paths from '@/paths';
-import { redirect } from 'next/navigation';
 
 const createTopicSchema = z.object({
   name: z
@@ -54,8 +55,8 @@ export async function createTopic(
       }
     });
 
+    revalidatePath(paths.home());
     redirect(paths.topicShow(topic.slug));
-    //TODO: revalidate homepage
   } catch (error) {
     if (error instanceof Error) {
       return {
