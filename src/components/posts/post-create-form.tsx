@@ -9,6 +9,9 @@ type PostCreateFormProps = {
 };
 
 export default function PostCreateForm({ slug }: PostCreateFormProps) {
+  // Use .bind to pass other variables to server action. By default will only receive
+  // formData. Could also just add value as hidden field but that's sloppy. Bound
+  // variable will show up as first arg in server action function.
   const [state, formAction, isPending] = useActionState(createPost.bind(null, slug), {
     errors: {}
   });

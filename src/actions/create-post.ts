@@ -28,12 +28,23 @@ export async function createPost(
   const session = await auth();
   if (!session) return { errors: { _form: ['Not signed in'] } };
 
-  console.log(session, slug);
-
   const result = createPostSchema.safeParse({
     title: formData.get('title'),
     content: formData.get('content')
   });
+
+  try {
+    const topicId = await prisma.topic.findUnique({ where: { slug }, select: { id: true } });
+    return { errors: {} };
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        errors: {
+          _form: [error.message]
+        }
+      };
+    }
+  }
 
   if (!result.success) {
     return {
