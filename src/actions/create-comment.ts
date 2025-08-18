@@ -29,7 +29,7 @@ export async function createComment(
 
   if (!result.success) {
     return {
-      errors: result.error.flatten().fieldErrors
+      errors: z.flattenError(result.error).fieldErrors
     };
   }
 
