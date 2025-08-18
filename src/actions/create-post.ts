@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { z } from 'zod';
 import { auth } from '@/auth';
 import { prisma } from '@/db';
@@ -25,7 +26,6 @@ export async function createPost(
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
-  let postId: string;
   try {
     const session = await auth();
     if (!session?.user?.id) return { errors: { _form: ['Not signed in'] } };
@@ -60,8 +60,11 @@ export async function createPost(
       }
     });
 
-    postId = post.id;
+    revalidatePath(paths.topicShow(slug));
+    redirect(paths.postShow(slug, post.id));
   } catch (error) {
+    if (isRedirectError(error)) throw error;
+
     if (error instanceof Error) {
       return {
         errors: {
@@ -76,7 +79,4 @@ export async function createPost(
       }
     };
   }
-
-  revalidatePath(paths.topicShow(slug));
-  redirect(paths.postShow(slug, postId));
 }

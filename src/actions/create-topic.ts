@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { z } from 'zod';
 import { auth } from '@/auth';
 import { prisma } from '@/db';
@@ -30,7 +31,6 @@ export async function createTopic(
   formState: CreateTopicFormState,
   formData: FormData
 ): Promise<CreateTopicFormState> {
-  let topicSlug: string;
   try {
     // Check user is authorized to perform this action
     const session = await auth();
@@ -56,8 +56,11 @@ export async function createTopic(
       }
     });
 
-    topicSlug = topic.slug;
+    revalidatePath(paths.home());
+    redirect(paths.topicShow(topic.slug));
   } catch (error) {
+    if (isRedirectError(error)) throw error;
+
     if (error instanceof Error) {
       return {
         errors: {
@@ -72,7 +75,4 @@ export async function createTopic(
       }
     };
   }
-
-  revalidatePath(paths.home());
-  redirect(paths.topicShow(topicSlug));
 }

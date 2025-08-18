@@ -25,7 +25,7 @@ export default function TopicCreateForm() {
       </PopoverTrigger>
       <PopoverContent className='bg-stone-900'>
         <form onSubmit={handleSubmit} className='flex w-80 flex-col gap-4 p-4'>
-          <h3 text-lg>Create a Topic</h3>
+          <h3 className='text-lg'>Create a Topic</h3>
           <Input
             name='name'
             label='Name'
