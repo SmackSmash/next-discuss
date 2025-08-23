@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
-import { useActionState } from "react";
-import { useEffect, useRef, useState } from "react";
-import { Textarea, Button } from "@nextui-org/react";
-import FormButton from "@/components/common/form-button";
-import * as actions from "@/actions";
+import { useActionState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Textarea, Button } from '@heroui/react';
+import * as actions from '@/actions';
 
 interface CommentCreateFormProps {
   postId: string;
@@ -12,11 +11,7 @@ interface CommentCreateFormProps {
   startOpen?: boolean;
 }
 
-export default function CommentCreateForm({
-  postId,
-  parentId,
-  startOpen,
-}: CommentCreateFormProps) {
+export default function CommentCreateForm({ postId, parentId, startOpen }: CommentCreateFormProps) {
   const [open, setOpen] = useState(startOpen);
   const ref = useRef<HTMLFormElement | null>(null);
   const [formState, action, isPending] = useActionState(
@@ -36,29 +31,29 @@ export default function CommentCreateForm({
 
   const form = (
     <form action={action} ref={ref}>
-      <div className="space-y-2 px-1">
+      <div className='space-y-2 px-1'>
         <Textarea
-          name="content"
-          label="Reply"
-          placeholder="Enter your comment"
+          name='content'
+          label='Reply'
+          placeholder='Enter your comment'
           isInvalid={!!formState.errors.content}
-          errorMessage={formState.errors.content?.join(", ")}
+          errorMessage={formState.errors.content?.join(', ')}
         />
 
         {formState.errors._form ? (
-          <div className="p-2 bg-red-200 border rounded border-red-400">
-            {formState.errors._form?.join(", ")}
+          <div className='rounded border border-red-400 bg-red-200 p-2'>
+            {formState.errors._form?.join(', ')}
           </div>
         ) : null}
 
-        <FormButton isLoading={isPending}>Create Comment</FormButton>
+        <Button isLoading={isPending}>Create Comment</Button>
       </div>
     </form>
   );
 
   return (
     <div>
-      <Button size="sm" variant="light" onClick={() => setOpen(!open)}>
+      <Button size='sm' variant='light' onClick={() => setOpen(!open)}>
         Reply
       </Button>
       {open && form}
