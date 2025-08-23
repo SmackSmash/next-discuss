@@ -3,7 +3,7 @@ import { prisma } from '@/db';
 
 export type CommentWithAuthor = Comment & { user: { name: string | null; image: string | null } };
 
-export function fetchcommentsById(postId: string): Promise<CommentWithAuthor[]> {
+export function fetchCommentsByPostId(postId: string): Promise<CommentWithAuthor[]> {
   return prisma.comment.findMany({
     where: { postId },
     include: {
