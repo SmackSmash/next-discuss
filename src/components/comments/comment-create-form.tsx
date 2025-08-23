@@ -3,7 +3,7 @@
 import { useActionState } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Textarea, Button } from '@heroui/react';
-import * as actions from '@/actions';
+import { createComment } from '@/actions';
 
 interface CommentCreateFormProps {
   postId: string;
@@ -15,7 +15,7 @@ export default function CommentCreateForm({ postId, parentId, startOpen }: Comme
   const [open, setOpen] = useState(startOpen);
   const ref = useRef<HTMLFormElement | null>(null);
   const [formState, action, isPending] = useActionState(
-    actions.createComment.bind(null, { postId, parentId }),
+    createComment.bind(null, { postId, parentId }),
     { errors: {} }
   );
 

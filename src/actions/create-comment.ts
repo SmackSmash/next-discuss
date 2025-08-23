@@ -34,6 +34,7 @@ export async function createComment(
   }
 
   const session = await auth();
+
   if (!session || !session.user || !session.user.id) {
     return {
       errors: {
