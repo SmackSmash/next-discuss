@@ -1,6 +1,19 @@
-type PostShowProps = {};
+import { notFound } from 'next/navigation';
+import { prisma } from '@/db';
 
-export default function PostShow({}: PostShowProps) {
+type PostShowProps = {
+  postId: string;
+};
+
+export default async function PostShow({ postId }: PostShowProps) {
+  const post = await prisma.post.findFirst({
+    where: {
+      id: postId
+    }
+  });
+
+  if (!post) notFound();
+
   return (
     <div className='m-4'>
       <h1 className='my-2 text-2xl font-bold'>{post.title}</h1>
