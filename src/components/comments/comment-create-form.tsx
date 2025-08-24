@@ -46,14 +46,16 @@ export default function CommentCreateForm({ postId, parentId, startOpen }: Comme
           </div>
         ) : null}
 
-        <Button isLoading={isPending}>Create Comment</Button>
+        <Button isLoading={isPending} type='submit'>
+          Create Comment
+        </Button>
       </div>
     </form>
   );
 
   return (
     <div>
-      <Button size='sm' variant='light' onClick={() => setOpen(!open)}>
+      <Button size='sm' onPress={() => setOpen(!open)}>
         Reply
       </Button>
       {open && form}

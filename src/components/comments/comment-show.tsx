@@ -31,8 +31,8 @@ export default async function CommentShow({ commentId, comments }: CommentShowPr
           className='h-10 w-10 rounded-full'
         />
         <div className='flex-1 space-y-3'>
-          <p className='text-sm font-medium text-gray-500'>{comment.user.name}</p>
-          <p className='text-gray-900'>{comment.content}</p>
+          <p className='text-sm font-medium'>{comment.user.name}</p>
+          <p>{comment.content}</p>
 
           <CommentCreateForm postId={comment.postId} parentId={comment.id} />
         </div>
