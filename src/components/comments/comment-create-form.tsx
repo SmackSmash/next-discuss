@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Textarea, Button } from '@heroui/react';
 import { createComment } from '@/actions';
 
-interface CommentCreateFormProps {
+type CommentCreateFormProps = {
   postId: string;
   parentId?: string;
   startOpen?: boolean;
-}
+};
 
 export default function CommentCreateForm({ postId, parentId, startOpen }: CommentCreateFormProps) {
   const [open, setOpen] = useState(startOpen);

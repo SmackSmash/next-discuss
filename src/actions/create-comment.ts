@@ -10,13 +10,13 @@ const createCommentSchema = z.object({
   content: z.string().min(3)
 });
 
-interface CreateCommentFormState {
+type CreateCommentFormState = {
   errors: {
     content?: string[];
     _form?: string[];
   };
   success?: boolean;
-}
+};
 
 export async function createComment(
   { postId, parentId }: { postId: string; parentId?: string },

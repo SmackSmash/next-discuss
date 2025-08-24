@@ -1,9 +1,9 @@
 import CommentShow from '@/components/comments/comment-show';
 import { fetchCommentsByPostId } from '@/db/queries/comments';
 
-interface CommentListProps {
+type CommentListProps = {
   postId: string;
-}
+};
 
 export default async function CommentList({ postId }: CommentListProps) {
   const comments = await fetchCommentsByPostId(postId);
