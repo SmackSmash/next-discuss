@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import { Button } from '@heroui/react';
 import CommentCreateForm from '@/components/comments/comment-create-form';
-import { CommentWithAuthor } from '@/db/queries/comments';
+import { type CommentWithAuthor } from '@/db/queries/comments';
 
 interface CommentShowProps {
   commentId: string;
