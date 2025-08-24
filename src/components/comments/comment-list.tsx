@@ -1,11 +1,10 @@
 import CommentShow from '@/components/comments/comment-show';
-import { CommentWithAuthor } from '@/db/queries/comments';
+import { type CommentWithAuthor } from '@/db/queries/comments';
 
 interface CommentListProps {
   fetchData: () => Promise<CommentWithAuthor[]>;
 }
 
-// TODO: Get a list of comments from somewhere
 export default async function CommentList({ fetchData }: CommentListProps) {
   const comments = await fetchData();
 
