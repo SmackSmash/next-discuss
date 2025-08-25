@@ -6,6 +6,11 @@ type PostShowProps = {
 };
 
 export default async function PostShow({ postId }: PostShowProps) {
+  // Artificial loading delay. Remove later
+  await new Promise(resolve => {
+    setTimeout(resolve, 2500);
+  });
+
   const post = await prisma.post.findFirst({
     where: {
       id: postId
